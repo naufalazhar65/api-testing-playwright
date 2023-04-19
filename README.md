@@ -9,7 +9,7 @@
 - The fourth test checks whether a DELETE request to the /api/users/{id} endpoint with the ID of an existing user deletes the user and returns a response with a 204 status code. It also checks whether a subsequent GET request to the same endpoint with the same ID returns a response with a 404 status code, indicating that the user no longer exists.
 
 # RUN
-npm run tests
-npx playwright test
-npx playwright test --reporter=html
+- npm run tests
+- npx playwright test
+- npx playwright test --reporter=html
 

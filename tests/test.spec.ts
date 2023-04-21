@@ -4,13 +4,12 @@ test.describe.parallel('API TESTING', () => {
   const baseURL = 'https://reqres.in/api';
 
   test('should get a user', async ({ page }) => {
-    // Send GET request to the users endpoint
     const response = await page.goto(`${baseURL}/users?page=2`);
   
-    // Check if the response status code is 200 OK
+    // Memeriksa apakah kode status respons 200 OK
     expect(response?.status()).toBe(200);
   
-    // Check if the response body contains a list of users
+    // Memeriksa apakah isi respons berisi daftar pengguna
     const responseBody = await response?.json();
     expect(responseBody?.data).toBeDefined();
     expect(Array.isArray(responseBody?.data)).toBe(true);
@@ -23,10 +22,10 @@ test.describe.parallel('API TESTING', () => {
         job: 'Software Engineer'
       }
     });
-    // Verify the response status code
+    // Memeriksa kode status respons
     expect(response.status()).toBe(201);
 
-    // Verify the response body
+    // Memeriksa isi respons
     const responseBody = JSON.parse(await response.text());
     expect(responseBody.name).toBe('Naufal');
     expect(responseBody.job).toBe('Software Engineer');
@@ -35,7 +34,6 @@ test.describe.parallel('API TESTING', () => {
   });
 
   test('should update a user', async ({ request }) => {
-    // Create a new user to be updated
     const createUserResponse = await request.post(`${baseURL}/users`, {
       data: {
         name: 'Naufal',
@@ -44,7 +42,6 @@ test.describe.parallel('API TESTING', () => {
     });
     const user = JSON.parse(await createUserResponse.text());
 
-    // Update the user's information
     const updateUserResponse = await request.put(`${baseURL}/users/${user.id}`, {
       data: {
         name: 'Naufal',
@@ -52,10 +49,10 @@ test.describe.parallel('API TESTING', () => {
       }
     });
 
-    // Verify the response status code
+    // Memeriksa kode status respons
     expect(updateUserResponse.status()).toBe(200);
 
-    // Verify the response body
+    // Memeriksa isi respons
     const updatedUser = JSON.parse(await updateUserResponse.text());
     expect(updatedUser.name).toBe('Naufal');
     expect(updatedUser.job).toBe('Web Developer');
@@ -63,7 +60,6 @@ test.describe.parallel('API TESTING', () => {
   });
 
   test('should delete a user', async ({ request }) => {
-    // Create a new user to delete
     const createResponse = await request.post(`${baseURL}/users`, {
       data: {
         name: 'Naufal',
@@ -72,13 +68,12 @@ test.describe.parallel('API TESTING', () => {
     });
     const user = JSON.parse(await createResponse.text());
   
-    // Delete the user
     const deleteResponse = await request.delete(`${baseURL}/users/${user.id}`);
 
-    // Verify the response status code
+    // Memeriksa kode status respons
     expect(deleteResponse.status()).toBe(204);
 
-    // Verify that the user was deleted
+    // Memeriksa apakah pengguna telah dihapus
     const getResponse = await request.get(`${baseURL}/users/${user.id}`);
     expect(getResponse.status()).toBe(404);
   });
